@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <h1>Dashboard</h1>
+    <a href="/logout">Logout</a>
+
+    {% if user.is_superuser %}
+    <h3>Hello, {{current_user}}.</h3>
+    <h5>
+      You are a admin!. Assign tasks to users from
+      <a href="/admin/taskmanagement/task/add">here</a>
+    </h5>
+    {% else %}
+    <h3>Hello {{current_user}}!</h3>
+    {% endif %} {% if total_tasks %}
+    <h4>These are {{total_tasks}} task, which are assigned to you</h4>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Creation time</th>
+          <th>DeadLine</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+        <tr>
+          <td>{{task.title}}</td>
+          <td>{{task.description}}</td>
+          <td>{{task.createdAt}}</td>
+          <td>{{task.deadline}}</td>
+        </tr>
+        {% endfor %} {% else %}
+        <h4>There are no tasks assigned to you</h4>
+        {% endif %}
+      </tbody>
+    </table>
+  </body>
+</html>
